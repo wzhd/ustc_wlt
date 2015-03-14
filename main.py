@@ -16,6 +16,17 @@ request_url = "http://wlt.ustc.edu.cn/cgi-bin/ip"
 
 res = requests.post(request_url, data=data)
 
+#check
+res.encoding = 'gb2312'
+if '用户名或密码错误' in res.text:
+    print('用户名或密码错误')
+    exit()
+elif '没有使用网络通对外连接的权限' in res.text:
+    print('没有使用网络通对外连接的权限')
+    exit()
+elif '不是科大校内IP地址' in res.text:
+    print('您使用的IP地址不是科大校内IP地址')
+    exit()
 
 #开通网络通
 params = dict(cmd ='set', url='URL', type=port, exe=0, go='开通网络')
