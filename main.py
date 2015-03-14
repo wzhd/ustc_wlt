@@ -3,9 +3,11 @@
 import urllib.request
 import urllib.parse
 import http.cookiejar
+import os
 
-name = 'username'  #用户名
-password = '123456'  #密码
+keypath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'passwd')
+keyfile = open(keypath,'r')
+name, password = keyfile.readline().strip().split(' ')
 port = 7  #出口
 
 #cookie
