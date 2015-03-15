@@ -2,6 +2,7 @@
 
 import os
 import requests
+import re
 
 keypath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'passwd')
 keyfile = open(keypath,'r')
@@ -34,7 +35,9 @@ params = dict(cmd ='set', url='URL', type=port, exe=0, go='开通网络')
 res = session.post(request_url, data=params)
 res.encoding = 'gb2312'
 
+status = re.search('当前IP地址([0-9.]+)状态:<br>\n出口: ([0-9][\u4e00-\u9fff]+[0-9]?)<br>\n权限: ([\u4e00-\u9fff]{2})\n', res.text).groups()
+
 if '网络设置成功' in res.text:
-    print("ok")
+    print('当前IP地址: %s 出口: %s 权限: %s' % (status[0], status[1], status[2]))
 else:
     print("not ok")
