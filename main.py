@@ -10,12 +10,12 @@ port = 7  #出口
 
 
 #login
+session = requests.Session()
 data = dict(cmd='login', url='URL', ip='', name=name, password=password,
             go='登录账户')
 request_url = "http://wlt.ustc.edu.cn/cgi-bin/ip"
 
-res = requests.post(request_url, data=data)
-cookies = res.cookies
+res = session.post(request_url, data=data)
 
 #check
 res.encoding = 'gb2312'
@@ -31,7 +31,7 @@ elif '不是科大校内IP地址' in res.text:
 
 #开通网络通
 params = dict(cmd ='set', url='URL', type=port, exe=0, go='开通网络')
-res = requests.post(request_url, data=params, cookies=cookies)
+res = session.post(request_url, data=params)
 res.encoding = 'gb2312'
 
 if '网络设置成功' in res.text:
